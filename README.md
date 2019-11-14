@@ -1,6 +1,6 @@
 # Parcel App
 
-Aplicación número 3 desarrolada en el curso de flutter del ITSPR
+Aplicación número 3 desarrollada en el curso de flutter del ITSPR
 
 ## Pequeña Descripción
 
