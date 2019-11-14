@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 
 import 'dart:ui';
 
+import 'package:parcel_app/src/models/login_modelo.dart';
+import 'package:parcel_app/src/preferencias/preferencias_usuario.dart';
+import 'package:parcel_app/src/providers/login_provider.dart';
+
+import 'package:parcel_app/src/utils/utils.dart' as utils;
+
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _keyFormLogin = GlobalKey<FormState>();
+  final _provider = LoginProvider();
+  final _modelo = LoginModelo();
+
+  final pref = new PreferenciasUsuario();
+
   bool _estaVisible = false;
+
   final _estiloTituloTxt = TextStyle(
     fontSize: 50.0,
     fontWeight: FontWeight.bold,
@@ -52,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                           'Iniciar Sesión',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _hacerSubmit();
+                        },
                       ),
                     )
                   ],
@@ -82,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _crearForm() {
     return Form(
+      key: _keyFormLogin,
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -107,7 +123,16 @@ class _LoginPageState extends State<LoginPage> {
   Widget _crearInputLogin() {
     return Theme(
       data: Theme.of(context).copyWith(primaryColor: Colors.orange),
-      child: TextField(
+      child: TextFormField(
+        onSaved: (valor) {
+          _modelo.usuario = valor;
+        },
+        validator: (valor) {
+          if (valor == '')
+            return 'Debe ingresar datos';
+          else
+            return null;
+        },
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           fillColor: Colors.blue[50].withOpacity(0.5),
@@ -128,7 +153,16 @@ class _LoginPageState extends State<LoginPage> {
   Widget _crearInputPassword() {
     return Theme(
       data: Theme.of(context).copyWith(primaryColor: Colors.orange),
-      child: TextField(
+      child: TextFormField(
+        onSaved: (valor) {
+          _modelo.pass = valor;
+        },
+        validator: (valor) {
+          if (valor == '')
+            return 'Debe ingresar datos';
+          else
+            return null;
+        },
         obscureText: _estaVisible ? false : true,
         decoration: InputDecoration(
             fillColor: Colors.blue[50].withOpacity(0.5),
@@ -164,7 +198,10 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           '¿No tienes una cuenta?',
-          style: TextStyle(color: Colors.white, fontSize: 20.0, backgroundColor: Colors.orange.withOpacity(0.5)),
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              backgroundColor: Colors.orange.withOpacity(0.5)),
         ),
         FlatButton(
           child: Text(
@@ -178,5 +215,34 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     );
+  }
+
+  Future<bool> _hacerSubmit() async {
+    if(!_keyFormLogin.currentState.validate()) return false;
+
+    _keyFormLogin.currentState.save();
+
+    utils.mostrarCargando(context);
+    /*_provider.loginUsuario(_modelo.usuario, _modelo.pass).whenComplete(() {
+      Navigator.pop(context);
+    });*/
+
+    Map<String, dynamic> respuesta = await _provider.loginUsuario(_modelo.usuario, _modelo.pass);
+
+    if(respuesta['ok']) {
+      pref.estaLogueado = true;
+      Navigator.pop(context);
+      utils.mostrarInicioCorrecto(context, 'Correcto', true);
+      Navigator.pop(context);
+      Navigator.of(context).pushReplacementNamed('home');
+    } else {
+      pref.estaLogueado = false;
+      Navigator.pop(context);
+      utils.mostrarInicioCorrecto(context, 'Incorrecto', true);
+    }
+    print(pref.estaLogueado);
+    //await utils.mostrarInicioCorrecto(context, 'mensaje', true);
+
+    return true;
   }
 }
