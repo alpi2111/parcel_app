@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dart:ui';
+
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
@@ -13,9 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   );
 
   final TextStyle _estiloSubtituloTxt = TextStyle(
-      fontSize: 30.0,
-      color: Colors.white70,
-      fontStyle: FontStyle.italic);
+      fontSize: 30.0, color: Colors.white70, fontStyle: FontStyle.italic);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,20 +27,36 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/bg_login.jpg'),
-                fit: BoxFit.fitHeight
-              ),
+                  image: AssetImage('assets/bg_login.jpg'),
+                  fit: BoxFit.fitHeight),
             ),
           ),
           //Aqui comienza todo lo que no es la imagen
-          SafeArea(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  _crearTitulos(),
-                  _crearForm(),
-                  _crearCuenta(),
-                ],
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: SafeArea(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SizedBox(height: 40.0),
+                    _crearTitulos(),
+                    _crearForm(),
+                    _crearCuenta(),
+                    Container(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: FlatButton(
+                        color: Colors.deepOrange,
+                        child: Text(
+                          'Iniciar Sesión',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {},
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -74,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 20.0),
             _crearInputPassword(),
             FlatButton(
+              color: Colors.orange.withOpacity(0.5),
               child: Text(
                 '¿Olvidaste tu contraseña?',
                 style: TextStyle(color: Colors.white, fontSize: 15.0),
@@ -87,42 +105,57 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _crearInputLogin() {
-    return TextField(
-      //col
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        labelText: 'Correo',
-        prefixIcon: Icon(Icons.email),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+    return Theme(
+      data: Theme.of(context).copyWith(primaryColor: Colors.orange),
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          fillColor: Colors.blue[50].withOpacity(0.5),
+          filled: true,
+          labelText: 'Correo',
+          prefixIcon: Icon(
+            Icons.email,
+            color: Colors.orange,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
       ),
     );
   }
 
   Widget _crearInputPassword() {
-    return TextField(
-      obscureText: _estaVisible ? false : true,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: 'Contraseña',
-          prefixIcon: Icon(Icons.lock),
-          suffixIcon: IconButton(
-            icon: _estaVisible
-                ? Icon(Icons.visibility_off)
-                : Icon(Icons.visibility),
-            onPressed: () {
-              _estaVisible
-                  ? setState(() {
-                      _estaVisible = false;
-                    })
-                  : setState(() {
-                      _estaVisible = true;
-                    });
-            },
-          )),
+    return Theme(
+      data: Theme.of(context).copyWith(primaryColor: Colors.orange),
+      child: TextField(
+        obscureText: _estaVisible ? false : true,
+        decoration: InputDecoration(
+            fillColor: Colors.blue[50].withOpacity(0.5),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            labelText: 'Contraseña',
+            prefixIcon: Icon(
+              Icons.lock,
+              color: Colors.orange,
+            ),
+            suffixIcon: IconButton(
+              icon: _estaVisible
+                  ? Icon(Icons.visibility_off)
+                  : Icon(Icons.visibility),
+              onPressed: () {
+                _estaVisible
+                    ? setState(() {
+                        _estaVisible = false;
+                      })
+                    : setState(() {
+                        _estaVisible = true;
+                      });
+              },
+            )),
+      ),
     );
   }
 
@@ -131,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           '¿No tienes una cuenta?',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 20.0, backgroundColor: Colors.orange.withOpacity(0.5)),
         ),
         FlatButton(
           child: Text(
