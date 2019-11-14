@@ -1,16 +1,15 @@
-# parcel_app
+# Parcel App
 
-A new Flutter project.
+Aplicación número 3 desarrolada en el curso de flutter del ITSPR
 
-## Getting Started
+## Pequeña Descripción
 
-This project is a starting point for a Flutter application.
+Ésta aplicación se utilizará para aprender a tomar un diseño realizado en papel, Photoshop, Illustrator, Sketch o cualquier otro medio que pueda hacer un deseñador o dibujante.
 
-A few resources to get you started if this is your first Flutter project:
+Se utilizará Flutter para la creación del diseño y posteriormente se agregará funcionamiento para aprende las herramientas utilizadas en el mundo real.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Primer Commit
+Se agregó en el primer commit parte del diseño de la página del login, en posteriores commits se irán implementando más cosas.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+Para cualquier duda se puede consultar su [documentación online oficial](https://flutter.dev/docs), la cual ofrece ejemplos, explicaciones y tutoriales de cómo utilizar su SDK así como sus API's
