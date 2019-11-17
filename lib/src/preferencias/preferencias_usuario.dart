@@ -20,11 +20,7 @@ class PreferenciasUsuario {
   bool get estaLogueado {
     return _prefs.getBool('isLogin') ?? false;
   }
-
-  get instance {
-    return _instancia;
-  }
-
+  
   set estaLogueado(bool valor) {
     _prefs.setBool('isLogin', valor);
   }

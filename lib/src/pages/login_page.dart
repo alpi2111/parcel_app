@@ -223,10 +223,6 @@ class _LoginPageState extends State<LoginPage> {
     _keyFormLogin.currentState.save();
 
     utils.mostrarCargando(context);
-    /*_provider.loginUsuario(_modelo.usuario, _modelo.pass).whenComplete(() {
-      Navigator.pop(context);
-    });*/
-
     Map<String, dynamic> respuesta = await _provider.loginUsuario(_modelo.usuario, _modelo.pass);
 
     if(respuesta['ok']) {
@@ -240,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pop(context);
       utils.mostrarInicioCorrecto(context, 'Incorrecto', true);
     }
-    print(pref.estaLogueado);
+    //(pref.estaLogueado);
     //await utils.mostrarInicioCorrecto(context, 'mensaje', true);
 
     return true;

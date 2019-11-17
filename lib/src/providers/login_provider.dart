@@ -35,6 +35,7 @@ class LoginProvider {
     };
 
     final response = await http.post(urlRegistro, body: json.encode(datos));
+    //response.statusCode
 
     final decodedResp = json.decode(response.body);
     if(decodedResp != null) {
